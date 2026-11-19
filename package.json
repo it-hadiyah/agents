@@ -12,7 +12,8 @@
     "migrate": "node src/db/migrate.js",
     "seed:admin": "node scripts/create-admin.js",
     "backup": "bash scripts/backup.sh",
-    "test": "node --test --test-concurrency=1 'test/*.test.js'"
+    "test": "node --test --test-concurrency=1 'test/*.test.js'",
+    "test:e2e": "node test/e2e/ui.e2e.js"
   },
   "dependencies": {
     "@fontsource/ibm-plex-sans-arabic": "^5.3.0",

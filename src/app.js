@@ -18,13 +18,12 @@ function createApp() {
   app.use(express.json({ limit: '100kb' }));
 
   app.use('/api', session({
-    name: 'hadiyah.sid', secret: config.sessionSecret, resave: false, saveUninitialized: true, rolling: true,
+    name: 'hadiyah.sid', secret: config.sessionSecret, resave: false, saveUninitialized: false, rolling: true,
     store: new pgSession({ pool, tableName: 'user_sessions', createTableIfMissing: false }),
     cookie: { httpOnly: true, sameSite: 'lax', secure: config.cookieSecure, maxAge: config.sessionMaxAgeMs },
   }));
   app.use('/api', (req, res, next) => {
     res.set('Cache-Control', 'no-store');
-    if (req.session && !req.session.csrf) req.session.csrf = require('crypto').randomBytes(32).toString('hex');
     next();
   });
   app.use('/api', sec.apiLimiter, sec.sameOrigin, sec.loadUser, sec.csrf, api);
